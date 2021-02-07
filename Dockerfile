@@ -1,6 +1,6 @@
 FROM mysql:8
 
-ENV REDIS_VERSION 6.0.5
+ENV REDIS_VERSION 6.0.7
 
 RUN set -eux; \
   apt-get update; \
@@ -30,6 +30,10 @@ RUN chmod +x /usr/local/bin/forego
 EXPOSE 3306 6379
 
 RUN echo "mysql: /entrypoint.sh mysqld\n\
-redis: redis-server" > /Procfile
+redis: redis-server --protected-mode no" > /Procfile
+
+RUN \
+  echo "[mysqld]" > /etc/mysql/conf.d/default_authentication.cnf && \
+  echo "default_authentication_plugin=mysql_native_password" >> /etc/mysql/conf.d/default_authentication.cnf
 
 ENTRYPOINT [ "forego", "start", "-r" ]
