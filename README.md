@@ -1,4 +1,4 @@
-# mysql-redis
+# mysql-redis (deprecated)
 merge mysql &amp; redis container.<br>
 I created this repository for reducing resource usage on local machine.
 
